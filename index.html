@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal Access - Awaiting Code</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for a dark, green monochrome CRT effect */
+        body {
+            font-family: 'Inter', monospace;
+            background-color: #000000;
+        }
+        .crt {
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5), inset 0 0 10px rgba(0, 255, 0, 0.2);
+            border: 2px solid #00AA00;
+        }
+        .crt-text {
+            color: #00FF00;
+            text-shadow: 0 0 2px #00FF00;
+        }
+        .crt-flash {
+            animation: flash 0.5s ease-in-out infinite alternate;
+        }
+        @keyframes flash {
+            from { opacity: 0.9; }
+            to { opacity: 1.0; }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <div id="terminal-container" class="crt bg-gray-900 p-8 rounded-lg w-full max-w-md">
+        <div class="text-xs mb-4 crt-text">
+            <p>*** SYSTEM STATUS: ONLINE ***</p>
+            <p>ACCESS PROTOCOL INITIATED. VIGENERE LOCK ENGAGED.</p>
+        </div>
+
+        <h1 class="text-2xl font-bold mb-6 crt-text">AWAITING ACCESS CODE</h1>
+
+        <!-- The vital clue for the Vigenère cipher -->
+        <div class="bg-gray-800 p-3 mb-6 rounded-md crt-text text-sm">
+            <p class="crt-flash">HINT:</p>
+            <p class="font-mono text-lg">The key is the **ECHO**.</p>
+        </div>
+        
+        <div class="flex flex-col space-y-4">
+            <input type="password" id="accessCode" 
+                   class="bg-gray-900 border border-gray-700 p-3 rounded-md crt-text text-lg focus:outline-none focus:border-green-500 font-mono"
+                   placeholder="ENTER DECRYPTED CODE..." onkeydown="handleEnter(event)">
+            
+            <button onclick="checkAccess()" 
+                    class="bg-green-700 hover:bg-green-800 text-black font-bold py-3 rounded-md transition duration-200">
+                INITIATE SEQUENCE
+            </button>
+        </div>
+        
+        <div id="message" class="mt-6 p-3 text-sm rounded-md font-mono"></div>
+    </div>
+
+    <script>
+        // Use a high-quality random string for the flag in your actual CTF, 
+        // but use a placeholder for development.
+        const FINAL_FLAG = "CTF{Vigenere_Terminal_Access_G4NT}";
+        const CORRECT_PASSWORD = "ACCESS GRANTED"; // The decrypted text from the image
+
+        const messageDiv = document.getElementById('message');
+        const inputField = document.getElementById('accessCode');
+
+        function displayMessage(text, isError = false) {
+            messageDiv.innerHTML = text;
+            messageDiv.className = `mt-6 p-3 text-sm rounded-md font-mono ${isError ? 'bg-red-900 text-red-400' : 'bg-green-900 text-green-400'}`;
+        }
+
+        function checkAccess() {
+            const code = inputField.value.toUpperCase().trim();
+            
+            if (code === CORRECT_PASSWORD) {
+                displayMessage(`ACCESS PERMITTED! Retrieving Secure Flag...<br><br>FLAG: <span class="text-xl font-extrabold">${FINAL_FLAG}</span>`, false);
+                inputField.disabled = true;
+            } else if (code.length === 0) {
+                displayMessage("ERROR: INPUT FIELD IS EMPTY. TRY AGAIN.", true);
+            } else {
+                displayMessage("ACCESS DENIED. CODE MISMATCH. RE-CALIBRATING CIPHER LOGIC...", true);
+            }
+        }
+
+        function handleEnter(event) {
+            if (event.key === 'Enter') {
+                checkAccess();
+            }
+        }
+
+        // Initial status message
+        displayMessage("STATUS: Awaiting Vigenère key input...", false);
+
+    </script>
+</body>
+</html>
