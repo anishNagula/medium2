@@ -1,0 +1,7 @@
+The Forgotten Terminal 🖥️
+
+Artifacts: terminal.png (Image File)
+
+Description:
+
+You've discovered an old hard drive containing a single corrupted snapshot from a decommissioned security console. The image, terminal.png, shows an obsolete CRT monitor displaying static and a few lines of cryptic text. "The signal is lost in the noise," is the only accompanying log entry found. Your objective is to find the hidden access code.
