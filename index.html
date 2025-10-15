@@ -15,6 +15,11 @@
         .crt {
             box-shadow: 0 0 15px rgba(0, 255, 0, 0.5), inset 0 0 10px rgba(0, 255, 0, 0.2);
             border: 2px solid #00AA00;
+            overflow-wrap: break-word;       /* ✅ allows text wrapping */
+            word-break: break-word;           /* ✅ breaks long flag strings */
+            white-space: normal;              /* ✅ prevents overflow */
+            max-height: 80vh;                 /* ✅ avoids going off-screen */
+            overflow-y: auto;                 /* ✅ scroll if needed */
         }
         .crt-text {
             color: #00FF00;
@@ -28,6 +33,7 @@
             to { opacity: 1.0; }
         }
     </style>
+    
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
 
@@ -62,8 +68,16 @@
     <script>
         // Use a high-quality random string for the flag in your actual CTF, 
         // but use a placeholder for development.
-        const FINAL_FLAG = "CTF{Vigenere_Terminal_Access_G4NT}";
-        const CORRECT_PASSWORD = "KKHUL JA SIM SIM"; // The decrypted text from the image
+        const encodedFlag = "Q1RGe1ZpZ2VuZXJlX1Rlcm1pbmFsX0FjY2Vzc19HNE5UfQ==";
+        const encodedKey = "S0hVTCBKQSBTSU0gU0lN";
+
+        function decode(str) {
+            return atob(str);
+        }
+
+        const FINAL_FLAG = decode(encodedFlag);
+        const CORRECT_PASSWORD = decode(encodedKey);
+
 
         const messageDiv = document.getElementById('message');
         const inputField = document.getElementById('accessCode');
